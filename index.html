@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>LeanCloud 数据更新示例</title>
+    <!-- 引入 LeanCloud JavaScript SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.0.0/dist/av-min.js"></script>
+</head>
+<body>
+    <button id="updateData">更新数据</button>
+    <script>
+        // 初始化 LeanCloud，替换为你自己的 AppID 和 AppKey
+        AV.init({
+            appId: 'f9vjHfMtOx1PLF8u76XAA87-gzGzoHz',
+            appKey: '6S1Sth9UnphbL34YXGS1bh'
+        });
+        // 获取更新数据的按钮元素
+        const updateBtn = document.getElementById('updateData');
+        updateBtn.addEventListener('click', function () {
+            // 假设要更新 Todo 类中 objectId 为 '你的ObjectId' 的数据
+            const Todo = AV.Object.extend('Todo');
+            const query = new AV.Query(Todo);
+            query.get('你的ObjectId').then(function (todo) {
+                // 在这里设置要更新的字段和值，示例中更新 content 字段为 '新的内容'
+                todo.set('content', '新的内容');
+                return todo.save();
+            }).then(function (updatedTodo) {
+                console.log('数据更新成功', updatedTodo);
+            }, function (error) {
+                console.error('数据更新失败', error);
+            });
+        });
+    </script>
+</body>
+</html>
